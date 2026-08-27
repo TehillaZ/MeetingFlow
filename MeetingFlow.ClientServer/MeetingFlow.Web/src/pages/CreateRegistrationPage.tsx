@@ -54,7 +54,7 @@ export default function CreateRegistrationPage() {
 
   return (
     <>
-      <h1>Register for an Meeting</h1>
+      <h1>Register for a Meeting</h1>
 
       <div className="warning-box">
         <strong>Educational Note:</strong> This form posts a Registration entity directly to the API. A malicious user

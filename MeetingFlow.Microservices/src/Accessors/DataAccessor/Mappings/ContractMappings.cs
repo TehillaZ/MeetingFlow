@@ -89,6 +89,9 @@ public static class ContractMappings
     public static AttendeeSummaryDto ToSummaryDto(this Attendee attendee) =>
         new(attendee.Id, attendee.FullName, attendee.Company);
 
+    public static VenueDetailsDto ToDetailsDto(this Venue venue) =>
+        new(venue.Id, venue.Name, venue.Address, venue.City, venue.Capacity);
+
     public static AttendeeContactDto ToContactDto(this Attendee attendee) =>
         new(attendee.Id, attendee.FullName, attendee.Email);
 

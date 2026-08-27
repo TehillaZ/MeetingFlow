@@ -10,6 +10,9 @@ Planned test-suite boundaries:
   SchedulingEngine HTTP application in the test process with
   `WebApplicationFactory`.
 - `MeetingFlow.IntegrationTests` — a specific integration between real components.
+- `MeetingFlow.SystemTests` — the full deployed stack, exercised only through the
+  public Gateway boundary (port 8080). No service is faked. Requires
+  `docker compose up -d --build` from the repo root before running.
 
 ## SchedulingEngine component tests
 
