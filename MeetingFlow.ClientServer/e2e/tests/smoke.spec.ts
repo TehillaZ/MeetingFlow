@@ -27,3 +27,28 @@ test("user can open the meeting dropdown", async ({ page }) => {
     page.getByRole("option")
   ).toHaveCount(4);
 });
+
+test("dashboard Total Meetings matches the catalogue", async ({ page }) => {
+    await page.goto("/");
+    await expect(
+    page.getByRole("heading", { name: "Meetings", level: 1 })
+  ).toBeVisible();
+
+  const visibleMeetings = page.locator(".card-grid .card");
+
+  await expect(visibleMeetings).not.toHaveCount(0);
+
+  const catalogueCount = await visibleMeetings.count();
+ 
+  await page.goto("/dashboard");
+
+  const totalMeetingsCard = page
+    .locator(".stat-card")
+    .filter({ hasText: "Total Meetings" });
+
+  const dashboardCount = await totalMeetingsCard
+    .locator(".number")
+    .textContent();
+
+  expect(Number(dashboardCount)).toBe(catalogueCount);
+});

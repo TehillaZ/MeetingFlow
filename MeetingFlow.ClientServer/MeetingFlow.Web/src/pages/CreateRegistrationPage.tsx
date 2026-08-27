@@ -69,10 +69,16 @@ export default function CreateRegistrationPage() {
       )}
       {error && <div className="error">{error}</div>}
 
+     
       <form onSubmit={handleSubmit} style={{ maxWidth: 500 }}>
         <div className="field">
           <label htmlFor="meeting">Meeting</label>
-          <select id="meeting" value={meetingId} onChange={(e) => setMeetingId(e.target.value)} required>
+          <select
+            id="meeting"
+            value={meetingId}
+            onChange={(e) => setMeetingId(e.target.value)}
+            required
+          >
             <option value="">-- Select Meeting --</option>
             {meetings
               .filter((ev) => ev.status === "Published")
@@ -86,17 +92,33 @@ export default function CreateRegistrationPage() {
 
         <div className="field">
           <label htmlFor="attendeeName">Your Name</label>
-          <input id="attendeeName" type="text" value={attendeeName} onChange={(e) => setAttendeeName(e.target.value)} required />
+          <input
+            id="attendeeName"
+            type="text"
+            value={attendeeName}
+            onChange={(e) => setAttendeeName(e.target.value)}
+            required
+          />
         </div>
 
         <div className="field">
           <label htmlFor="attendeeEmail">Your Email</label>
-          <input id="attendeeEmail" type="email" value={attendeeEmail} onChange={(e) => setAttendeeEmail(e.target.value)} required />
+          <input
+            id="attendeeEmail"
+            type="email"
+            value={attendeeEmail}
+            onChange={(e) => setAttendeeEmail(e.target.value)}
+            required
+          />
         </div>
 
         <div className="field">
-          <label>Ticket Type</label>
-          <select value={ticketType} onChange={(e) => setTicketType(e.target.value)}>
+          <label htmlFor="ticketType">Ticket Type</label>
+          <select
+            id="ticketType"
+            value={ticketType}
+            onChange={(e) => setTicketType(e.target.value)}
+          >
             <option value="General">General</option>
             <option value="VIP">VIP</option>
             <option value="Early Bird">Early Bird</option>
@@ -108,6 +130,7 @@ export default function CreateRegistrationPage() {
           {submitting ? "Registering..." : "Register"}
         </button>
       </form>
+
     </>
   );
 }

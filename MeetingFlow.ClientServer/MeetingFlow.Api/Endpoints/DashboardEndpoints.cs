@@ -13,7 +13,8 @@ public static class DashboardEndpoints
         // make API contracts implicit and hard to maintain.
         app.MapGet("/api/dashboard", async (MeetingFlowDbContext db) =>
         {
-            var totalMeetings = await db.Meetings.CountAsync();
+           var totalMeetings = await db.Meetings
+               .CountAsync(m => m.Status == "Published");
             var totalRegistrations = await db.Registrations.CountAsync();
             var totalSpeakers = await db.Speakers.CountAsync();
             var averageFeedbackRating = await db.Feedback.AnyAsync()

@@ -7,7 +7,7 @@ test("user can register for a meeting", async ({ page }) => {
     page.getByRole("heading", { name: "Register for a Meeting" })
   ).toBeVisible();
 
-  await page.getByRole("combobox").nth(0).selectOption({ index: 1 });
+  await page.getByLabel("Meeting").selectOption({ index: 1 });
 
   await page.getByLabel("Your Name").fill("Test User");
 
@@ -15,11 +15,11 @@ test("user can register for a meeting", async ({ page }) => {
     .getByLabel("Your Email")
     .fill(`e2e-${Date.now()}@meetingflow.test`);
 
-  await page.getByRole("combobox").nth(1).selectOption({ index: 1 });
+  await page.getByLabel("Ticket Type").selectOption({ label: "VIP" });
 
   await page.getByRole("button", { name: "Register" }).click();
 
   await expect(
-    page.getByText("You have successfully registered for the meeting.")
+    page.getByText("Registration created successfully!")
   ).toBeVisible();
 });
