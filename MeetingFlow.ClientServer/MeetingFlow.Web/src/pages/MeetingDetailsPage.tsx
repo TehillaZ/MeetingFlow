@@ -25,13 +25,21 @@ export default function MeetingDetailsPage() {
   if (loading) return <div className="loading">Loading meeting...</div>;
   if (error) return <div className="error">Error: {error}</div>;
   if (!meeting) return <h1>Meeting Not Found</h1>;
-
+  
   const badgeClass =
     meeting.status === "Published" ? "badge-published" : meeting.status === "Draft" ? "badge-draft" : "badge-cancelled";
 
-  const avgRating = meeting.feedback?.length
-    ? (meeting.feedback.reduce((sum, f) => sum + f.rating, 0) / meeting.feedback.length).toFixed(1)
-    : "N/A";
+
+  function calculateAverageRating(feedback: { rating: number }[] | undefined): string {
+    if (!feedback || feedback.length === 0) return "N/A";
+    const totalRating = feedback.reduce((sum: number, f: { rating: number; }) => sum + f.rating, 0);
+    return (totalRating / feedback.length).toFixed(1);
+  }
+  
+  // const avgRating = meeting.feedback?.length
+  //   ? (meeting.feedback.reduce((sum, f) => sum + f.rating, 0) / meeting.feedback.length).toFixed(1)
+  //   : "N/A";
+  const avgRating = calculateAverageRating(meeting.feedback);
 
   return (
     <>

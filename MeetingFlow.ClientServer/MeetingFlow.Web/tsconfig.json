@@ -17,5 +17,5 @@
     "noFallthroughCasesInSwitch": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["src", "vitest.setup.ts"]
+  "include": ["src", "vitest.setup.ts", "vitest.config.ts"]
 }

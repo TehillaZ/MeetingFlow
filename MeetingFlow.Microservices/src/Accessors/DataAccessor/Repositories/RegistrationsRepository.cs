@@ -59,4 +59,11 @@ public class RegistrationsRepository
 
     public Task<List<Attendee>> GetAllAttendeesAsync() =>
         _db.Attendees.ToListAsync();
+
+    public async Task<Attendee> CreateAttendeeAsync(Attendee attendee)
+    {
+        _db.Attendees.Add(attendee);
+        await _db.SaveChangesAsync();
+        return attendee;
+    }
 }

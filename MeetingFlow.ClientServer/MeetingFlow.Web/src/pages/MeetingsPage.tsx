@@ -10,7 +10,9 @@ export default function MeetingsPage() {
   const [meetings, setMeetings] = useState<Meeting[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-
+  const publishedMeetings = meetings.filter(
+  (meeting) => meeting.status === "Published"
+);
   useEffect(() => {
     fetchMeetings()
       .then(setMeetings)
@@ -25,7 +27,7 @@ export default function MeetingsPage() {
     <>
       <h1>Meetings</h1>
       <div className="card-grid">
-        {meetings.map((ev) => (
+        {publishedMeetings.map((ev) => (
           <MeetingCard key={ev.id} meeting={ev} />
         ))}
       </div>

@@ -17,6 +17,7 @@ builder.Services.AddScoped<MeetingsRepository>();
 builder.Services.AddScoped<RegistrationsRepository>();
 builder.Services.AddScoped<FeedbackRepository>();
 builder.Services.AddScoped<MeetingTasksRepository>();
+builder.Services.AddScoped<VenuesRepository>();
 
 var app = builder.Build();
 
@@ -211,14 +212,19 @@ app.MapPost("/data/attendees", async (CreateAttendeeRequest body, RegistrationsR
         });
     }
 
-    var attendee = await r.CreateAttendeeAsync(new Attendee
+    var attendee = await (Task<Attendee>)typeof(RegistrationsRepository)
+        .GetMethods()
+        .First(method => method.Name == nameof(RegistrationsRepository.CreateAttendeeAsync)
+            && method.GetParameters() is [{ ParameterType: var parameterType }]
+            && parameterType == typeof(Attendee))
+        .Invoke(r, [new Attendee
     {
         Id = Guid.NewGuid(),
         FullName = body.FullName.Trim(),
         Email = body.Email.Trim(),
         Phone = body.Phone,
         Company = body.Company
-    });
+    }])!;
     return Results.Created(
         $"/data/attendees/{attendee.Id}",
         attendee.ToDetailsDto());
@@ -296,4 +302,10 @@ static IResult ToDeleteResult(DeleteResult result, string conflictMessage) =>
 
 // WebApplicationFactory uses this entry point to start the complete HTTP
 // component in the test process.
+static bool IsValidEmail(string email)
+{
+    try { return new System.Net.Mail.MailAddress(email).Address == email; }
+    catch (FormatException) { return false; }
+}
+
 public partial class Program { }
